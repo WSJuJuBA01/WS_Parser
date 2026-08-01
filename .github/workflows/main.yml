@@ -1,15 +1,14 @@
-name: Update Proxy List
+name: Update Subscription
 
 on:
-  push:
-    branches:
-      - main
   schedule:
-    - cron: '0 * * * *' # Автоматическое обновление каждый час
-  workflow_dispatch: # Кнопка для ручного запуска в Actions
-
-permissions:
-  contents: write # Разрешение боту на запись и пуш файлов в репозиторий
+    # Запуск каждый день в 03:00 UTC (примерно 6:00 МСК)
+    - cron: '0 3 * * *'
+  # Также можно запускать вручную из интерфейса Actions
+  workflow_dispatch:
+  # И при пуше в основную ветку (опционально)
+  push:
+    branches: [ main, master ]
 
 jobs:
   build:
@@ -18,35 +17,35 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0 # Скачиваем всю историю, чтобы rebase работал корректно
 
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.11'
 
       - name: Install dependencies
         run: |
-          pip install requests
+          python -m pip install --upgrade pip
+          pip install requests tqdm
 
-      - name: Run Parser Script
-        run: python parser.py
-
-      - name: Commit and Push changes
+      - name: Run parser
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          
-          # Добавляем обновленные файлы
+          python parser.py --max-total 500 --output subscription.txt
+
+      - name: Commit and push if changed
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
           git add subscription.txt subscription_b64.txt
-          
-          # Делаем коммит. Если изменений в файлах нет, шаг не упадет
-          git commit -m "🔄 Обновление подписок: $(date +'%Y-%m-%d %H:%M')" || exit 0
-          
-          # Сначала подтягиваем изменения из облака, если ветка main ушла вперед, 
-          # и аккуратно дописываем наш коммит поверх них
-          git pull --rebase origin main
-          
-          # Пушим финальный результат без конфликтов
-          git push origin main
+          git diff --staged --quiet || git commit -m "Auto-update subscription $(date '+%Y-%m-%d %H:%M')"
+          git push
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Upload artifacts (опционально)
+        uses: actions/upload-artifact@v4
+        with:
+          name: subscription-files
+          path: |
+            subscription.txt
+            subscription_b64.txt
