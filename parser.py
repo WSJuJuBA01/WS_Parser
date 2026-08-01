@@ -29,16 +29,6 @@ SOURCES = {
     "EtoNeYa": ["https://etoneya.best/whitelist"],
     "BYWARM": ["https://gitverse.ru/api/repos/bywarm/rser/raw/branch/master/selected.txt"],
     "ByeWhite": ["https://raw.githubusercontent.com/ByeWhiteLists/ByeWhiteLists2/refs/heads/main/ByeWhiteLists2.txt"],
-    "Temnuk": ["https://raw.githubusercontent.com/Temnuk/naabuzil/refs/heads/main/whitelist_full"],
-    "Igareck": [
-        "https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/Vless-Reality-White-Lists-Rus-Mobile.txt",
-        "https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/WHITE-CIDR-RU-all.txt",
-        "https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/BLACK_VLESS_RUS.txt",
-        "https://raw.githubusercontent.com/igareck/vpn-configs-for-russia/refs/heads/main/BLACK_SS-all_RUS.txt"
-    ],
-    "Aleksey": ["https://raw.githubusercontent.com/AlekseySamoylov/ProxyList/refs/heads/main/all.txt"],
-    "AntiZapret": ["https://raw.githubusercontent.com/antizapret/antizapret/refs/heads/main/subscriptions/antizapret.txt"],
-    "Zagorsky": ["https://raw.githubusercontent.com/zagorsky/ss/refs/heads/main/ss.txt"],
 }
 
 # ==========================================
