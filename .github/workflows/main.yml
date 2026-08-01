@@ -3,7 +3,7 @@ name: Update Subscription
 on:
   schedule:
     # Запуск каждый день в 03:00 UTC (примерно 6:00 МСК)
-    - cron: '0 3 * * *'
+    - cron: '0 * * * *'
   # Также можно запускать вручную из интерфейса Actions
   workflow_dispatch:
   # И при пуше в основную ветку (опционально)
