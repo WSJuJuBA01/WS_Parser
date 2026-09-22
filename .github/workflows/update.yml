@@ -1,0 +1,40 @@
+name: Update configs
+
+on:
+  schedule:
+    - cron: "*/30 * * * *"
+  workflow_dispatch: {}
+  push:
+    paths:
+      - "parser.py"
+      - ".github/workflows/update.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Run parser
+        run: python parser.py
+
+      - name: Commit & push if changed
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          git add output/combined.txt output/combined_base64.txt
+          if git diff --cached --quiet; then
+            echo "Изменений нет, коммит не нужен"
+          else
+            git commit -m "auto: update configs $(date -u +'%Y-%m-%d %H:%M UTC')"
+            git push
+          fi
