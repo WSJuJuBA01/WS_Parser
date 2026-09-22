@@ -31,7 +31,7 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          git add output/igarek-configs-parser.txt output/igarek-configs-parser_base64.txt
+          git add output/igarek-configs-parser.txt output/igarek-configs-parser-base64.txt
           if git diff --cached --quiet; then
             echo "Изменений нет, коммит не нужен"
           else
