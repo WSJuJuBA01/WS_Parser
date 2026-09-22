@@ -205,7 +205,7 @@ def main() -> int:
 
     plain = render(result)
 
-    with open("output/combined.txt", "w", encoding="utf-8") as f:
+    with open("output/igarek-configs-parser.txt", "w", encoding="utf-8") as f:
         f.write(plain)
 
     b64 = base64.b64encode(plain.encode("utf-8")).decode("ascii")
