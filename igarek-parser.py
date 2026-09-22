@@ -209,7 +209,7 @@ def main() -> int:
         f.write(plain)
 
     b64 = base64.b64encode(plain.encode("utf-8")).decode("ascii")
-    with open("output/combined_base64.txt", "w", encoding="utf-8") as f:
+    with open("output/igarek-configs-parser-base64.txt", "w", encoding="utf-8") as f:
         f.write(b64)
 
     total = len(result.black) + len(result.white)
