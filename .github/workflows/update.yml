@@ -25,7 +25,7 @@ jobs:
           python-version: "3.12"
 
       - name: Run parser
-        run: python igarek-parser1.py
+        run: python igarek-parser.py
 
       - name: Commit & push if changed
         run: |
